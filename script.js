@@ -34,7 +34,20 @@ document.addEventListener(
 
 ///////////////////////////////////////
 // smooth scroll
+// 196
 const btnScroll = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
-// console.log(section1);
+btnScroll.addEventListener('click', () => {
+    // old way
+    // const { left: leftSec1, top: topSec1 } = section1.getBoundingClientRect();
+    // const { pageXOffset, pageYOffset } = window;
+    // window.scrollTo({
+    //     left: leftSec1 + pageXOffset,
+    //     top: topSec1 + pageYOffset,
+    //     behavior: 'smooth',
+    // });
+
+    // new way
+    section1.scrollIntoView({ behavior: 'smooth' });
+});
