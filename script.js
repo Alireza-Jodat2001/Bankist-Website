@@ -31,3 +31,10 @@ document.addEventListener(
         !modal.classList.contains('hidden') &&
         closeModal()
 );
+
+///////////////////////////////////////
+// smooth scroll
+const btnScroll = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+// console.log(section1);
