@@ -223,10 +223,12 @@ images.forEach(img => observerImg.observe(img));
 // Slider
 // 208
 // 209
+// Initialize
+const dots = document.querySelector('.dots');
 let slides = slider.querySelectorAll('.slide'),
     curSlide = 1;
-const dots = document.querySelector('.dots');
 
+// Add dot element
 slides.forEach((_, index) => {
     const doteElement = `<button class="dots__dot ${
         index === 0 ? 'dots__dot--active' : ''
@@ -235,46 +237,57 @@ slides.forEach((_, index) => {
     dots.insertAdjacentHTML('beforeend', doteElement);
 });
 
-dots.addEventListener('click', event => {
-    const { target } = event;
-    if (target.closest('.dots__dot')) {
-        dots.querySelector('.dots__dot--active').classList.remove(
-            'dots__dot--active'
-        );
-        !target.classList.contains('dots__dot--active') &&
-            target.classList.add('dots__dot--active');
-        curSlide = +target.dataset.slide + 1;
-        traversSlide();
-    }
-});
-
+// Add copy last and first slide
 const lastSlide = slides[slides.length - 1];
 const firstSlide = slides[0].cloneNode(true);
 slider.prepend(lastSlide.cloneNode(true));
 lastSlide.after(firstSlide);
 
-slides = slider.querySelectorAll('.slide');
+// remove and add Active class function
+const removeActiveClass = dotActive =>
+    dotActive.classList.remove('dots__dot--active');
+const addActiveClass = dotActive =>
+    dot[curSlide - 1]?.classList.add('dots__dot--active');
 
+// Dots click event
+dots.addEventListener('click', event => {
+    const { target } = event;
+
+    if (target.closest('.dots__dot')) {
+        const dotActive = dots.querySelector('.dots__dot--active');
+
+        removeActiveClass(dotActive);
+
+        !target.classList.contains('dots__dot--active') &&
+            target.classList.add('dots__dot--active');
+
+        curSlide = +target.dataset.slide + 1;
+
+        traversSlide();
+    }
+});
+
+// Get new list slides and dots element
+slides = slider.querySelectorAll('.slide');
+const dot = dots.querySelectorAll('.dots__dot');
+
+// Initial layout
 slides.forEach(
     (slide, index) =>
         (slide.style.transform = `translateX(${100 * (index - 1)}%)`)
 );
 
-btnRight.addEventListener('click', rightBtnHandler);
-btnLeft.addEventListener('click', leftBtnHandler);
-
+// Travers slider
 function traversSlide() {
     slides.forEach((slide, index) => {
         slide.style.transition = '0.7s';
         slide.style.transform = `translateX(${100 * (index - curSlide)}%)`;
     });
 
-    dots.querySelector('.dots__dot--active').classList.remove(
-        'dots__dot--active'
-    );
-    dots.querySelectorAll('.dots__dot')[curSlide - 1]?.classList.add(
-        'dots__dot--active'
-    );
+    const dotActive = dots.querySelector('.dots__dot--active');
+
+    removeActiveClass(dotActive);
+    addActiveClass();
 }
 
 function sideSlide() {
@@ -291,11 +304,10 @@ function sideSlide() {
         );
     });
 
-    dots.querySelectorAll('.dots__dot')[curSlide - 1].classList.add(
-        'dots__dot--active'
-    );
+    addActiveClass();
 }
 
+// righ btn handler
 function rightBtnHandler() {
     if (curSlide < slides.length - 1) {
         curSlide++;
@@ -308,6 +320,7 @@ function rightBtnHandler() {
     }
 }
 
+// left btn handler
 function leftBtnHandler() {
     if (curSlide >= 0) {
         curSlide--;
@@ -320,8 +333,14 @@ function leftBtnHandler() {
     }
 }
 
+// Btns click event
+btnRight.addEventListener('click', rightBtnHandler);
+btnLeft.addEventListener('click', leftBtnHandler);
+
+// keybord event
 document.addEventListener('keydown', event => {
     const { key } = event;
+
     key === 'ArrowRight' && rightBtnHandler();
     key === 'ArrowLeft' && leftBtnHandler();
 });
