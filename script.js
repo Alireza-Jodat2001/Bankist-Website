@@ -191,7 +191,7 @@ const observerSec = new IntersectionObserver(
 );
 
 allSections.forEach(section => {
-    // section.classList.add('section--hidden');
+    section.classList.add('section--hidden');
     observerSec.observe(section);
 });
 
@@ -222,9 +222,7 @@ images.forEach(img => observerImg.observe(img));
 ///////////////////////////////////////
 // Slider
 // 208
-// slider.style.transform = 'translateX(-1300px)';
-// slider.style.overflow = 'visible';
-
+// 209
 let slides = slider.querySelectorAll('.slide'),
     curSlide = 1;
 const dots = document.querySelector('.dots');
