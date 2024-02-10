@@ -419,7 +419,7 @@ h4 {
     justify-content: center;
 
     /* THIS creates the animation! */
-    transition: transform 1s;
+    transition: transform 0.7s;
 }
 
 .slide > img {
@@ -483,8 +483,8 @@ h4 {
 }
 
 .dots__dot--active {
-    /* background-color: #fff; */
-    background-color: #888;
+    background-color: #fff;
+    /* background-color: #888; */
     opacity: 1;
 }
 
